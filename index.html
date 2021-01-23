@@ -3,9 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body>
-    hello from the other side 
+    <div id="header"> 
+        <div id="date">
+
+        </div>
+    </div>
+    <div id="content">
+        <div id="leftPane">
+            <div id="journal"></div>
+            <button id="submitEntry" onclick="submitEntry()">Create an Entry</button>
+        </div>
+        <div id="rightPane">
+            <div id="journalInputs">
+                <h1 id="presentMoment">The Present Moment</h1>
+                <div id="affirmation"></div>
+                <form action="">
+                    <input type="text" id="aff"></input>
+                    <input type="radio" name="emoji"></input>
+                    <input type="radio" name="emoji"></input>
+                    <input type="radio" name="emoji"></input>
+                    <input type="radio" name="emoji"></input>
+                    <textarea type="text" id="userContent">Hello</textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div id="journalButtons">
+                <button id="editBtn"></button>
+                <button id="shareBtn"></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let submitEntry = () => {
+          alert("Hi")
+        }
+
+        let d = new Date();
+        let year = d.getFullYear();
+        let month = d.getMonth();
+        let day = d.getDate();
+        let date = `${month+1}/${day}/${year}`
+        document.getElementById("date").innerHTML = `<span>${date}</span>` 
+    </script>
 </body>
 </html>
