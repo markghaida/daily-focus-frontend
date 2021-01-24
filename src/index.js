@@ -1,5 +1,15 @@
 const textBox = document.querySelector('#userContent');
 
-fetch('')
+const journalEntries = document.querySelector('.div6')
+
+fetch('http://localhost:3000/users')
   .then(response => response.json())
-  .then(data => console.log(data));
+  .then(renderUsername);
+
+
+  function renderUsername(names) {
+    names.forEach(name => {
+      journalEntries.textContent = name.username;
+    })
+  }
+
