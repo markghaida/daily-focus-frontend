@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,25 @@
     <script src="src/index.js" defer></script>
     <title>Document</title>
 </head>
-<body>
-    <div id="header"> 
-        <div id="date">
 
+<body>
+    <div class="parent">
+        <div class="div1">
+            <div class="nav-bar">
+                <button id="edit-btn">Edit Entry </button>
+                <button id="delete-btn">Delete Entry </button>
+                <button id="share-btn">Share</button>
+
+            </div>
         </div>
-    </div>
-    <div id="content">
-        <div id="leftPane">
-            <div id="journal"></div>
-            <button id="submitEntry" onclick="submitEntry()">Create an Entry</button>
+        <div class="div2">
+            <form>
+                <textarea id="w3review" name="w3review" rows="4" cols="50">Journal Entry</textarea>
+                <br><br>
+                <input type="submit" value="Submit">
+            </form>
         </div>
+<<<<<<< HEAD
         <div id="rightPane">
             <div id="journalInputs">
                 <h1 id="presentMoment">The Present Moment</h1>
@@ -35,20 +44,34 @@
             <div id="journalButtons">
                 <button id="editBtn"></button>
                 <button id="shareBtn"></button>
+=======
+        <div class="div3">Submit Button </div>
+        <div class="div4">
+            <div id="emotion">
+                <input type="radio" name="emotion" id="sad" />
+                <!-- <label for="sad"><img src="sad_image.png" alt="I'm sad" /></label> -->
+
+                <input type="radio" name="emotion" id="happy" />
+                <!-- <label for="happy"><img src="happy_image.png" alt="I'm happy" /></label> -->
+>>>>>>> 46a8a2517d8f795526d0e48c71e6a8fd2da4d2a2
             </div>
         </div>
+        <div class="div5">Affirmation Box</div>
+        <div class="div6">Previous Journal Entries</div>
+        <div class="div7">Create Entry</div>
+        <div class="div8">Large Nav Bar</div>
+        <div class="div9">Logo + Header</div>
+        <div class="div10">Date</div>
+        <div class="div11">
+            <form id="login">
+                <div class="container">
+                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <button type="submit">Create</button>
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <script>
-        let submitEntry = () => {
-          alert("Hi")
-        }
-
-        let d = new Date();
-        let year = d.getFullYear();
-        let month = d.getMonth();
-        let day = d.getDate();
-        let date = `${month+1}/${day}/${year}`
-        document.getElementById("date").innerHTML = `<span>${date}</span>` 
-    </script>
 </body>
+
 </html>
