@@ -8,9 +8,9 @@
     height: 100vh;
     }
 
-div {
+/* div {
     border: 1px solid black;
-}
+} */
     
 .div1 { grid-area: 9 / 11 / 12 / 12; }
 .div2 { grid-area: 9 / 6 / 13 / 10; }
