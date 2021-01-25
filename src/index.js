@@ -2,6 +2,8 @@ const textBox = document.querySelector('#userContent');
 const journalEntries = document.querySelector('.div6');
 const loginBtn = document.querySelector('#login');
 const userArray = [];
+const affirmationDiv =  document.querySelector(".div5") 
+
 
 /* GET ALL USERS */
 
@@ -15,6 +17,8 @@ function renderUsername(names) {
     userArray.push(name.username);
   })
 }
+
+
 
 /* LOGIN INFORMATION */
 
@@ -47,6 +51,20 @@ function createUser(newUserObj) {
     .then(data => {
       console.log('Success:', data);
     })
+}
+
+/* DISPLAY AFFIRMATION */
+
+function fetchAffirmation() {
+  fetch('https://dulce-affirmations-api.herokuapp.com/affirmation')
+    .then(res => res.json())
+    .then(data => displayAffirmation(data[0].phrase));
+}
+
+fetchAffirmation()
+
+function displayAffirmation(affirmation){
+  affirmationDiv.textContent = affirmation;
 }
 
 
