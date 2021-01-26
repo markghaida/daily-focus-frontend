@@ -10,6 +10,7 @@ const topNav = document.querySelector('.div11');
 const userArray = [];
 const newUserArray = [];
 let currentUserId; 
+let newCurrentUserId = [];
 let currentDay;
 
 dayOfTheWeek();
@@ -62,22 +63,48 @@ function renderUsername(names) {
 
 loginForm.addEventListener('submit', event => {
   event.preventDefault();
+  // console.log("hello")
+  //creates post request to create
+  //returns a single user with all their data 
 
   const userInput = event.target.uname.value;
+  renderUser(userInput);
+  // console.log(userInput)
+  function renderUser(userInput){
+    fetch('http://localhost:3000/users', {
+    method: 'POST', 
+    headers: {
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userInput),
+    })
+    .then(response => response.json())
+    .then(data => {
+      // newCurrentUserId.push(data.id);
+      journalEntries.dataset.id = data.id;
+    })
+    // console.log(newCurrentUserId);
+      }
+});
+
+
+  
+
+
   // console.log(userArray)
-    if (newUserArray.includes(userInput)) {
-      console.log("success");
-      loginForm.style.display = "none";
-      getJournals(1);
-    } else{
-      console.log("else")
+    // if (newUserArray.includes(userInput)) {
+    //   console.log("success");
+    //   loginForm.style.display = "none";
+    //   getJournals();
+    // } else{
+    //   console.log("else")
       //   const newUserObj = {
     //     username: userInput,
     //     name: userInput
     //   }
     //   createUser(newUserObj);
-    }
-  })
+  //   }
+  // })
   // event.target.reset();;
 
 function createUser(newUserObj) {
