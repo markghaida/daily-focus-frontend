@@ -5,17 +5,18 @@ const userArray = [];
 
 /* GET ALL USERS */
 getUsers();
-
+// this function is causing a constant loop fetch request..cant test anything w/o fixing
 function getUsers(){
   fetch('http://localhost:3000/users')
   .then(response => response.json())
-  .then(data => renderUsername(data));
+  .then(renderUsername);
 }
 
-function renderUsername() {
+function renderUsername(usersArray) {
   usersArray.forEach(userObj => {
-    userArray.push(name.username);
-    console.log(userObj.name)
+    // console.log(userObj.username)
+    userArray.push(userObj.username);
+    // console.log(userObj.name)
     // console.log(usersArray)
     })
   }
@@ -48,14 +49,13 @@ function renderUsername() {
         body: JSON.stringify(newUserObj),
       })
       .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-    }
+      .then(console.log);
+  }
     
     /* GET JOURNALS FETCH REQUEST */
     
     function getJournals(){
+      // console.log("inside of getJournals")
       //do we want to do a get request to Journal index or show?
       // the challenge with getting the show, is that we do not
       //have access to the id of that user when logging in.
@@ -67,7 +67,7 @@ function renderUsername() {
       
       fetch('http://localhost:3000/journals')
       .then(response => response.json())
-      .then(renderJournals);
+      .then(console.log);
       // .then(data => console.log(data));
     }
     
@@ -75,23 +75,23 @@ function renderUsername() {
     /* GET JOURNALS FETCH REQUEST */
     
     function renderJournals(journals){
+      console.log(journals)
       const ul = document.createElement("ul")
-      
       journals.forEach(journalEntry => {
         const li = document.createElement("li")
+        //may need and if condition to check the user id
+        //and get the corresponding journals
         const journalObj = {
-          
-          "Date": journalEntry.created_at,
-          "Entry": journalEntry.journal_entry,
-          "Affirmation": journalEntry.affirmation,
-          "Feeling": journalEntry.feeling
-          
+          date: journalEntry.created_at,
+          entry: journalEntry.journal_entry,
+          affirmation: journalEntry.affirmation,
+          feeling: journalEntry.feeling
         }
-        
-        li.append(journalObj)  
+        // console.log(journalObj["Date"])
+        li.append(journalObj.entry)  
         li.id = journalEntry.id
         ul.append(li)
-        
+        journalEntries.append(ul);
         li.addEventListener("click", clickedEntry)
       })
       
