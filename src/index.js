@@ -3,12 +3,12 @@ const journalEntries = document.querySelector('.div6');
 const loginForm = document.querySelector('#login');
 const loginBtn = document.querySelector('#login-btn');
 const createBtn = document.querySelector('#create-btn');
-const userArray = [];
 const affirmationDiv = document.querySelector('.div5');
 const topNav = document.querySelector('.div11');
 
-console.log(createBtn)
-
+const userArray = [];
+const currentUserId = [];
+// let allUserObj = [];
 
 /* GET ALL USERS */
 
@@ -19,9 +19,13 @@ fetch('http://localhost:3000/users')
 
 function renderUsername(names) {
   names.forEach(name => {
-    userArray.push(name.username);
+    let allUserObj = {
+      username: name.username,
+      id: name.id
+    }
+    userArray.push(allUserObj);
   })
-}
+};
 
 /* LOGIN INFORMATION */
 
@@ -39,9 +43,7 @@ loginForm.addEventListener('submit', event => {
       name: userInput
     }
     createUser(newUserObj);
-
   }
-  deleteUser();
 });
 
 function createUser(newUserObj) {
@@ -53,41 +55,51 @@ function createUser(newUserObj) {
     body: JSON.stringify(newUserObj),
   })
     .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-    })
-}
+    .then(deleteUser);
+};
 
 /* DELETE USER ACCOUNT */
 
-function deleteUser() {
+function deleteUser(userId) {
   const deleteBtn = document.createElement('button');
+  deleteBtn.className = "delete-user-btn"
   deleteBtn.textContent = "DELETE YOUR ACCOUNT";
+  deleteBtn.dataset.id = userId.id;
   topNav.append(deleteBtn);
+
+  const userDeleteBtn = document.querySelector('.delete-user-btn');
+  userClickDelete(userDeleteBtn);
 }
 
-// function deleteUserFetch(id) {
-//   fetch(`http://localhost:3000/users/${id}`, {
-//     method: 'DELETE',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   })
-// }
+function userClickDelete(userDeleteBtn) {
+  userDeleteBtn.addEventListener('click', event => {
+    console.log(event.target.dataset.id);
+    deleteUserFetch(event.target.dataset.id);
+  })
+}
 
+function deleteUserFetch(id) {
+  fetch(`http://localhost:3000/users/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  console.log('success');
+};
 /* DISPLAY AFFIRMATION */
 
 function fetchAffirmation() {
-  fetch('https://dulce-affirmations-api.herokuapp.com/affirmation')
+    fetch('https://dulce-affirmations-api.herokuapp.com/affirmation')
     .then(res => res.json())
-    .then(data => displayAffirmation(data[0].phrase));
-}
+      .then(data => displayAffirmation(data[0].phrase));
+  }
 
 fetchAffirmation()
 
 function displayAffirmation(affirmation) {
-  affirmationDiv.textContent = affirmation;
-}
+      affirmationDiv.textContent = affirmation;
+    }
 
 
 
