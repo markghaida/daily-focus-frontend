@@ -66,7 +66,7 @@ loginForm.addEventListener('submit', event => {
   const userInput = event.target.uname.value;
   // console.log(userArray)
     if (newUserArray.includes(userInput)) {
-      console.log("success");
+      console.log(currentUserId);
       loginForm.style.display = "none";
       getJournals(1);
     } else{
