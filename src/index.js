@@ -1,8 +1,13 @@
 const textBox = document.querySelector('#userContent');
 const journalEntries = document.querySelector('.div6');
-const loginBtn = document.querySelector('#login');
+const loginForm = document.querySelector('#login');
+const loginBtn = document.querySelector('#login-btn');
+const createBtn = document.querySelector('#create-btn');
 const userArray = [];
-const affirmationDiv =  document.querySelector(".div5") 
+const affirmationDiv = document.querySelector('.div5');
+const topNav = document.querySelector('.div11');
+
+console.log(createBtn)
 
 
 /* GET ALL USERS */
@@ -18,25 +23,25 @@ function renderUsername(names) {
   })
 }
 
-
-
 /* LOGIN INFORMATION */
 
-loginBtn.addEventListener('submit', event => {
+loginForm.addEventListener('submit', event => {
   event.preventDefault();
 
   const userInput = event.target.uname.value;
 
   if (userArray.includes(userInput)) {
     console.log('success');
+    loginForm.style.display = "none";
   } else {
     const newUserObj = {
       username: userInput,
       name: userInput
     }
-
     createUser(newUserObj);
+
   }
+  deleteUser();
 });
 
 function createUser(newUserObj) {
@@ -53,6 +58,23 @@ function createUser(newUserObj) {
     })
 }
 
+/* DELETE USER ACCOUNT */
+
+function deleteUser() {
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = "DELETE YOUR ACCOUNT";
+  topNav.append(deleteBtn);
+}
+
+// function deleteUserFetch(id) {
+//   fetch(`http://localhost:3000/users/${id}`, {
+//     method: 'DELETE',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+// }
+
 /* DISPLAY AFFIRMATION */
 
 function fetchAffirmation() {
@@ -63,7 +85,7 @@ function fetchAffirmation() {
 
 fetchAffirmation()
 
-function displayAffirmation(affirmation){
+function displayAffirmation(affirmation) {
   affirmationDiv.textContent = affirmation;
 }
 
