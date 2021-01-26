@@ -4,50 +4,106 @@ const loginBtn = document.querySelector('#login');
 const userArray = [];
 
 /* GET ALL USERS */
+getUsers();
 
-fetch('http://localhost:3000/users')
+function getUsers(){
+  fetch('http://localhost:3000/users')
   .then(response => response.json())
-  .then(renderUsername);
+  .then(data => renderUsername(data));
+}
 
-
-function renderUsername(names) {
-  names.forEach(name => {
+function renderUsername() {
+  usersArray.forEach(userObj => {
     userArray.push(name.username);
-  })
-}
-
-/* LOGIN INFORMATION */
-
-loginBtn.addEventListener('submit', event => {
-  event.preventDefault();
-
-  const userInput = event.target.uname.value;
-
-  if (userArray.includes(userInput)) {
-    console.log('success');
-  } else {
-    const newUserObj = {
-      username: userInput,
-      name: userInput
-    }
-
-    createUser(newUserObj);
-  }
-});
-
-function createUser(newUserObj) {
-  fetch('http://localhost:3000/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newUserObj),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
+    console.log(userObj.name)
+    // console.log(usersArray)
     })
-}
-
-
-
+  }
+  
+  /* LOGIN INFORMATION */
+  
+  loginBtn.addEventListener('submit', event => {
+    event.preventDefault();
+    
+    const userInput = event.target.uname.value;
+    
+    if (userArray.includes(userInput)) {
+      console.log('success');
+      getJournals();
+    } else {
+      const newUserObj = {
+        username: userInput,
+        name: userInput
+      }
+      createUser(newUserObj);
+    }
+  });
+    
+  function createUser(newUserObj) {
+    fetch('http://localhost:3000/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUserObj),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+    }
+    
+    /* GET JOURNALS FETCH REQUEST */
+    
+    function getJournals(){
+      //do we want to do a get request to Journal index or show?
+      // the challenge with getting the show, is that we do not
+      //have access to the id of that user when logging in.
+      // a work around is if line 26 is true, then do a get request 
+      // to the index, compare the user input with all the users,
+      // find the correct user and their corresponding Id. 
+      // this will allow us to then render the proper journals
+      // for that particular user
+      
+      fetch('http://localhost:3000/journals')
+      .then(response => response.json())
+      .then(renderJournals);
+      // .then(data => console.log(data));
+    }
+    
+    
+    /* GET JOURNALS FETCH REQUEST */
+    
+    function renderJournals(journals){
+      const ul = document.createElement("ul")
+      
+      journals.forEach(journalEntry => {
+        const li = document.createElement("li")
+        const journalObj = {
+          
+          "Date": journalEntry.created_at,
+          "Entry": journalEntry.journal_entry,
+          "Affirmation": journalEntry.affirmation,
+          "Feeling": journalEntry.feeling
+          
+        }
+        
+        li.append(journalObj)  
+        li.id = journalEntry.id
+        ul.append(li)
+        
+        li.addEventListener("click", clickedEntry)
+      })
+      
+    }
+    
+    /* EVENT LISTENER ON EACH JOURNAL ENTRY */
+    
+    function clickedEntry(e){
+      e.preventDefault();
+      
+    }
+    
+    function populateJournalArea(){
+      
+    }
