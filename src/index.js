@@ -4,11 +4,32 @@ const loginForm = document.querySelector('#login');
 const loginBtn = document.querySelector('#login-btn');
 const createBtn = document.querySelector('#create-btn');
 const affirmationDiv = document.querySelector('.div5');
+const dateBox = document.querySelector('.div10');
 const topNav = document.querySelector('.div11');
 
 const userArray = [];
-const currentUserId = [];
-// let allUserObj = [];
+let currentDay;
+
+dayOfTheWeek();
+/* TODAY'S DATE */
+
+let today = new Date().toLocaleDateString();
+
+function dayOfTheWeek() {
+  let d = new Date();
+  let weekday = new Array(7);
+  weekday[0] = "Sunday";
+  weekday[1] = "Monday";
+  weekday[2] = "Tuesday";
+  weekday[3] = "Wednesday";
+  weekday[4] = "Thursday";
+  weekday[5] = "Friday";
+  weekday[6] = "Saturday";
+
+  currentDay = weekday[d.getDay()];
+}
+
+dateBox.textContent = `Today is ${currentDay}, ${today}.`;
 
 /* GET ALL USERS */
 
@@ -91,16 +112,16 @@ function deleteUserFetch(id) {
 /* DISPLAY AFFIRMATION */
 
 function fetchAffirmation() {
-    fetch('https://dulce-affirmations-api.herokuapp.com/affirmation')
+  fetch('https://dulce-affirmations-api.herokuapp.com/affirmation')
     .then(res => res.json())
-      .then(data => displayAffirmation(data[0].phrase));
-  }
+    .then(data => displayAffirmation(data[0].phrase));
+}
 
 fetchAffirmation()
 
 function displayAffirmation(affirmation) {
-      affirmationDiv.textContent = affirmation;
-    }
+  affirmationDiv.textContent = affirmation;
+}
 
 
 
