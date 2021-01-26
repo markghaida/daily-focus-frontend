@@ -44,6 +44,7 @@ loginForm.addEventListener('submit', event => {
     }
     createUser(newUserObj);
   }
+  event.target.reset();
 });
 
 function createUser(newUserObj) {
