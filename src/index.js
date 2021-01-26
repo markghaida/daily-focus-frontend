@@ -6,9 +6,11 @@ const createBtn = document.querySelector('#create-btn');
 const affirmationDiv = document.querySelector('.div5');
 const dateBox = document.querySelector('.div10');
 const topNav = document.querySelector('.div11');
+
 let currentDay;
 
 dayOfTheWeek();
+
 /* TODAY'S DATE */
 
 let today = new Date().toLocaleDateString();
@@ -33,79 +35,74 @@ dateBox.textContent = `Today is ${currentDay}, ${today}.`;
 
 loginForm.addEventListener('submit', event => {
   event.preventDefault();
-  // console.log("hello")
-  //creates post request to create
-  //returns a single user with all their data 
-
   const userInput = event.target.uname.value;
   renderUser(userInput);
-  // console.log(userInput)
-  function renderUser(userInput){
-    fetch('http://localhost:3000/users', {
-    method: 'POST', 
+});
+
+function renderUser(userInput) {
+  fetch('http://localhost:3000/users', {
+    method: 'POST',
     headers: {
-    'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(userInput),
-    })
+  })
     .then(response => response.json())
-    .then(data => {
-      // newCurrentUserId.push(data.id);
-      journalEntries.dataset.id = data.id;
-    })
-    // console.log(newCurrentUserId);
-      }
-});
+    .then(processUser)
+}
+
+function processUser(user) {
+  journalEntries.dataset.id = user.id;
+  loginForm.style.display = "none";
+  deleteUser(user.id);
+}
 
 /* GET JOURNALS FROM USER */
 
-function getJournals(id){
-  fetch(`http://localhost:3000/users/${id}`)
-  .then(response => response.json())
-  .then(data => console.log(data.journals[0].affirmation));
-};
+// function getJournals(id){
+//   fetch(`http://localhost:3000/users/${id}`)
+//   .then(response => response.json())
+//   .then(data => console.log(data.journals[0].affirmation));
+// };
 
-function renderJournals(journals){
-  console.log(journals)
-  const ul = document.createElement("ul")
-  journals.forEach(journalEntry => {
-    const li = document.createElement("li")
-    const journalObj = {
-      date: journalEntry.created_at,
-      entry: journalEntry.journal_entry,
-      affirmation: journalEntry.affirmation,
-      feeling: journalEntry.feeling
-    }
-    // console.log(journalObj["Date"])
-    li.append(journalObj.entry)  
-    li.id = journalEntry.id
-    ul.append(li)
-    journalEntries.append(ul);
-    li.addEventListener("click", clickedEntry)
-  })
-  
-};
+// function renderJournals(journals){
+//   console.log(journals)
+//   const ul = document.createElement("ul")
+//   journals.forEach(journalEntry => {
+//     const li = document.createElement("li")
+//     const journalObj = {
+//       date: journalEntry.created_at,
+//       entry: journalEntry.journal_entry,
+//       affirmation: journalEntry.affirmation,
+//       feeling: journalEntry.feeling
+//     }
+//     // console.log(journalObj["Date"])
+//     li.append(journalObj.entry)  
+//     li.id = journalEntry.id
+//     ul.append(li)
+//     journalEntries.append(ul);
+//     li.addEventListener("click", clickedEntry)
+//   })
+
+// };
 
 /* EVENT LISTENER ON EACH JOURNAL ENTRY */
 
-function clickedEntry(e){
+function clickedEntry(e) {
   e.preventDefault();
 };
 
-function populateJournalArea(){
+function populateJournalArea() {
 };
 
 
 /* DELETE USER ACCOUNT */
 
 function deleteUser(userId) {
-  // console.log('check');
   const deleteBtn = document.createElement('button');
   deleteBtn.className = "delete-user-btn"
   deleteBtn.textContent = "DELETE YOUR ACCOUNT";
-  deleteBtn.dataset.id = userId.id;
-  currentUserId = userId.id;
-  getJournals(currentUserId);
+  deleteBtn.dataset.id = userId;
   topNav.append(deleteBtn);
 
   const userDeleteBtn = document.querySelector('.delete-user-btn');
@@ -128,6 +125,7 @@ function deleteUserFetch(id) {
   })
   console.log('success');
 };
+
 /* DISPLAY AFFIRMATION */
 
 function fetchAffirmation() {
