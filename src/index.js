@@ -52,6 +52,7 @@ loginForm.addEventListener('submit', event => {
     .then(data => {
       // newCurrentUserId.push(data.id);
       journalEntries.dataset.id = data.id;
+      getJournals(data.id);
     })
     // console.log(newCurrentUserId);
       }
@@ -62,26 +63,34 @@ loginForm.addEventListener('submit', event => {
 function getJournals(id){
   fetch(`http://localhost:3000/users/${id}`)
   .then(response => response.json())
-  .then(data => console.log(data.journals[0].affirmation));
-};
+  .then(data => {
+    // console.log(data.journals[0].affirmation)
+    renderJournals(data)});
+    // console.log(data)});
+  };
 
-function renderJournals(journals){
-  console.log(journals)
+function renderJournals(journalData){
+  const allJournals = journalData.journals
   const ul = document.createElement("ul")
-  journals.forEach(journalEntry => {
-    const li = document.createElement("li")
+  allJournals.forEach(journalEntry => {
+  // Array.prototype.forEach.call(journals, journal => {
+    // console.log(journalEntry);
+    const mainLi = document.createElement("li");
+    const infoLi = document.createElement("li");
+
     const journalObj = {
       date: journalEntry.created_at,
       entry: journalEntry.journal_entry,
       affirmation: journalEntry.affirmation,
       feeling: journalEntry.feeling
     }
-    // console.log(journalObj["Date"])
-    li.append(journalObj.entry)  
-    li.id = journalEntry.id
-    ul.append(li)
+    // console.log(journalObj)
+   mainLi.append(journalObj.date)  
+   infoLi.append(journalObj.feeling)  
+    mainLi.id = journalEntry.id
+    ul.append(mainLi, infoLi)
     journalEntries.append(ul);
-    li.addEventListener("click", clickedEntry)
+    // mainLi.addEventListener("click", clickedEntry)
   })
   
 };
