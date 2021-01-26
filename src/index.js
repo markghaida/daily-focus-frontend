@@ -6,10 +6,6 @@ const createBtn = document.querySelector('#create-btn');
 const affirmationDiv = document.querySelector('.div5');
 const dateBox = document.querySelector('.div10');
 const topNav = document.querySelector('.div11');
-
-const userArray = [];
-const newUserArray = [];
-let currentUserId; 
 let currentDay;
 
 dayOfTheWeek();
@@ -33,64 +29,33 @@ function dayOfTheWeek() {
 
 dateBox.textContent = `Today is ${currentDay}, ${today}.`;
 
-/* GET ALL USERS */
-getUsers();
-// this function is causing a constant loop fetch request..cant test anything w/o fixing
-function getUsers(){
-  fetch('http://localhost:3000/users')
-  .then(response => response.json())
-  .then(renderUsername)
-};
-
-
-function renderUsername(names) {
-  names.forEach(name => {
-    let allUserObj = {
-      username: name.username,
-      id: name.id
-    }
-    userArray.push(allUserObj);
-  })
-
-  names.forEach(name => {
-    newUserArray.push(name.username)
-  })
-  console.log(newUserArray);
-};
-
 /* LOGIN INFORMATION */
 
 loginForm.addEventListener('submit', event => {
   event.preventDefault();
+  // console.log("hello")
+  //creates post request to create
+  //returns a single user with all their data 
 
   const userInput = event.target.uname.value;
-  // console.log(userArray)
-    if (newUserArray.includes(userInput)) {
-      console.log(currentUserId);
-      loginForm.style.display = "none";
-      getJournals(1);
-    } else{
-      console.log("else")
-      //   const newUserObj = {
-    //     username: userInput,
-    //     name: userInput
-    //   }
-    //   createUser(newUserObj);
-    }
-  })
-  // event.target.reset();;
-
-function createUser(newUserObj) {
-  fetch('http://localhost:3000/users', {
-    method: 'POST',
+  renderUser(userInput);
+  // console.log(userInput)
+  function renderUser(userInput){
+    fetch('http://localhost:3000/users', {
+    method: 'POST', 
     headers: {
-      'Content-Type': 'application/json',
+    'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newUserObj),
-  })
+    body: JSON.stringify(userInput),
+    })
     .then(response => response.json())
-    .then(deleteUser);
-};
+    .then(data => {
+      // newCurrentUserId.push(data.id);
+      journalEntries.dataset.id = data.id;
+    })
+    // console.log(newCurrentUserId);
+      }
+});
 
 /* GET JOURNALS FROM USER */
 
