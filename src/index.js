@@ -88,6 +88,7 @@ function getJournals(id) {
 };
 
 function renderJournals(journalData) {
+  journalForm.style.display = "initial";
   const allJournals = journalData.journals
   const ul = document.createElement("div")
 
@@ -123,6 +124,7 @@ function renderJournals(journalData) {
     journalEntries.append(ul);
 
     // ADDING EVENT LISTENER TO EACH INNER UL
+
     innerUl.addEventListener("click", selectedEntry)
   })
 };
@@ -132,7 +134,7 @@ function renderJournals(journalData) {
 function selectedEntry(e) {
   e.preventDefault();
   lastClickedElement = e.target.parentNode;
-  // console.log(e.target.parentNode.children);
+  console.log(lastClickedElement);
   const date = e.target.parentNode.children[0].textContent
   const entry = e.target.parentNode.children[1].alt
   const affirmation = e.target.parentNode.children[2].alt
@@ -141,25 +143,25 @@ function selectedEntry(e) {
   entryInput.readOnly = true;
   entryInput.value = entry;
 
-  const editBtn = document.querySelector("#edit-btn")
+  // const editBtn = document.querySelector("#edit-btn")
 
-  editBtn.addEventListener("click", function (e) {
+  // editBtn.addEventListener("click", function (e) {
 
-    //why is it that I can edit the first entry I click on, but not any after?
+  //   //why is it that I can edit the first entry I click on, but not any after?
 
-    if (entryInput.readOnly === !false) {
-      console.log(e)
-      entryInput.readOnly = false;
-      editBtn.textContent = "Disable Edit"
-      submitBtn.value = "Update"
+  //   if (entryInput.readOnly === !false) {
+  //     console.log(e)
+  //     entryInput.readOnly = false;
+  //     editBtn.textContent = "Disable Edit"
+  //     submitBtn.value = "Update"
 
-    } else {
+  //   } else {
 
-      entryInput.readOnly = true;
-      editBtn.textContent = "Edit Entry"
-      submitBtn.value = "Submit"
-    }
-  })
+  //     entryInput.readOnly = true;
+  //     editBtn.textContent = "Edit Entry"
+  //     submitBtn.value = "Submit"
+  //   }
+  // })
 
   affirmationDiv.textContent = affirmation;
 };
