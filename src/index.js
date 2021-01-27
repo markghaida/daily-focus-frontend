@@ -77,15 +77,14 @@ function processUser(user) {
 function getJournals(id){
   fetch(`http://localhost:3000/users/${id}`)
   .then(response => response.json())
-  .then(data => {
-    // console.log(data.journals[0].affirmation)
-    renderJournals(data)});
-    // console.log(data)});
+  .then(data => 
+    renderJournals(data));
   };
 
 function renderJournals(journalData){
   const allJournals = journalData.journals
   const ul = document.createElement("div")
+
   allJournals.forEach(journalEntry => {
 
     // CREATING LI & OTHER TAGS 
@@ -122,7 +121,6 @@ function renderJournals(journalData){
   })
 };
 
-
 /* EVENT LISTENER ON EACH JOURNAL ENTRY */
 
 function selectedEntry(e){
@@ -141,6 +139,7 @@ function selectedEntry(e){
   editBtn.addEventListener("click", function(e){  
     
 //why is it that I can edit the first entry I click on, but not any after?
+
     if(entryInput.readOnly === !false){
       console.log(e)
       entryInput.readOnly = false; 
@@ -160,7 +159,6 @@ function selectedEntry(e){
 
 function populateJournalArea() {
 };
-
 
 
 /* DELETE USER ACCOUNT */
@@ -228,11 +226,14 @@ entryForm.addEventListener("submit", function(e){
   })
   .then(response => response.json())
   .then(data => {
-  console.log('Success:', data);
+    console.log(data.user_id);
+    journalEntries.innerHTML = "";
+    getJournals(data.user_id);
   })
   
   })
 
+/*RE-RENDER TO UPDATE JOURNAL FEED */
 
 
 /* CREATE A NEW JOURNAL ENTRY*/
