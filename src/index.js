@@ -11,10 +11,12 @@ const hiddenId = document.querySelector("#user-id-hidden")
 const entryInput = document.querySelector("#w3review")
 const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
+
 let currentDay;
 submitBtn.disabled = true;
 
 dayOfTheWeek();
+
 /* TODAY'S DATE */
 
 let today = new Date().toLocaleDateString();
@@ -39,21 +41,18 @@ dateBox.textContent = `Today is ${currentDay}, ${today}.`;
 
 loginForm.addEventListener('submit', event => {
   event.preventDefault();
-  // console.log("hello")
-  //creates post request to create
-  //returns a single user with all their data 
-
   const userInput = event.target.uname.value;
   renderUser(userInput);
-  // console.log(userInput)
-  function renderUser(userInput){
-    fetch('http://localhost:3000/users', {
-    method: 'POST', 
+});
+
+function renderUser(userInput) {
+  fetch('http://localhost:3000/users', {
+    method: 'POST',
     headers: {
-    'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(userInput),
-    })
+  })
     .then(response => response.json())
     .then(data => {
       // newCurrentUserId.push(data.id);
@@ -65,7 +64,11 @@ loginForm.addEventListener('submit', event => {
       }
 });
 
-/* GET JOURNALS FROM USER */
+function processUser(user) {
+  journalEntries.dataset.id = user.id;
+  loginForm.style.display = "none";
+  deleteUser(user.id);
+}
 
 function getJournals(id){
   fetch(`http://localhost:3000/users/${id}`)
@@ -151,7 +154,7 @@ function selectedEntry(e){
   affirmationDiv.textContent = affirmation;
 };
 
-function populateJournalArea(){
+function populateJournalArea() {
 };
 
 
@@ -159,13 +162,10 @@ function populateJournalArea(){
 /* DELETE USER ACCOUNT */
 
 function deleteUser(userId) {
-  // console.log('check');
   const deleteBtn = document.createElement('button');
   deleteBtn.className = "delete-user-btn"
   deleteBtn.textContent = "DELETE YOUR ACCOUNT";
-  deleteBtn.dataset.id = userId.id;
-  currentUserId = userId.id;
-  getJournals(currentUserId);
+  deleteBtn.dataset.id = userId;
   topNav.append(deleteBtn);
 
   const userDeleteBtn = document.querySelector('.delete-user-btn');
@@ -188,7 +188,6 @@ function deleteUserFetch(id) {
   })
   console.log('success');
 };
-
 
 /* DISPLAY AFFIRMATION */
 
