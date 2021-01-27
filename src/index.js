@@ -14,6 +14,7 @@ const createEntryBtn = document.querySelector("#create-entry")
 const emotionButton = document.querySelector('#emotion');
 const deleteJournalBtn = document.querySelector('#delete-btn');
 const navBar = document.querySelector('.nav-bar');
+const journalForm = document.querySelector('#journalForm');
 
 let lastClickedElement;
 let currentDay;
@@ -22,11 +23,10 @@ submitBtn.disabled = true;
 journalEntries.style.display = "none";
 createEntryBtn.style.display = "none";
 navBar.style.display = "none";
-
-
-fetchAffirmation()
+journalForm.style.display = "none";
 
 dayOfTheWeek();
+
 
 /* TODAY'S DATE */
 
@@ -247,6 +247,7 @@ createEntryBtn.addEventListener("click", function (e) {
   e.preventDefault();
   submitBtn.disabled = false;
   entryInput.value = "Create a Journal Entry";
+  journalForm.style.display = "initial";
   fetchAffirmation();
 })
 
