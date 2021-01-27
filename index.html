@@ -22,16 +22,26 @@
         <div class="div2">
             <form>
                 <input type="hidden" id="user-id-hidden"></input>
-                <div class="div5">Affirmation Box</div>
+                <div class="div5">Your Affirmation</div>
+                <br>
                 <br>
                 <div id="emotion">
-                    <input type="radio" name="emotion" id="sad" />
-                    <!-- <label for="sad"><img src="sad_image.png" alt="I'm sad" /></label> -->
+                    <fieldset>
+                        <legend>How do you feel?</legend>
     
-                    <input type="radio" name="emotion" id="happy" />
-                    <!-- <label for="happy"><img src="happy_image.png" alt="I'm happy" /></label> -->
+                        <input type="radio" name="emotion" id="happy" />
+                        <label for="emotion">&#x1F600</label>
+    
+                        <input type="radio" name="emotion" id="sad" />
+                        <label for="emotion">&#x1F62D</label>
+    
+                        <input type="radio" name="emotion" id="angry" />
+                        <label for="emotion">&#x1F621</label>
+    
+                        <input type="radio" name="emotion" id="indifferent" />
+                        <label for="emotion">&#x1F636</label>
+                    </fieldset>
                 </div>
-                <br>
                 <textarea id="w3review" name="w3review" rows="4" cols="50">Journal Entry</textarea>
                 <br><br>
                 <input type="submit" value="Submit" id="submit-entry-button">
@@ -39,25 +49,8 @@
         </div>
         <div class="div3">..</div>
         <div class="div4">
-            <div id="emotion">
-                <fieldset>
-                    <legend>How do you feel?</legend>
-
-                    <input type="radio" name="emotion" id="happy" />
-                    <label for="emotion">&#x1F600</label>
-
-                    <input type="radio" name="emotion" id="sad" />
-                    <label for="emotion">&#x1F62D</label>
-
-                    <input type="radio" name="emotion" id="angry" />
-                    <label for="emotion">&#x1F621</label>
-
-                    <input type="radio" name="emotion" id="indifferent" />
-                    <label for="emotion">&#x1F636</label>
-                </fieldset>
-            </div>
         </div>
-        <div class="div5">Affirmation Box</div>
+        <div class="div5">The Present Moment</div>
         <div class="div6">Previous Journal Entries</div>
         <div class="div7">
             <button id="create-entry">Create Entry</button>

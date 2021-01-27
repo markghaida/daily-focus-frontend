@@ -15,6 +15,9 @@ const createEntryBtn = document.querySelector("#create-entry")
 let currentDay;
 submitBtn.disabled = true;
 
+journalEntries.style.display = "none";
+createEntryBtn.style.display = "none";
+
 dayOfTheWeek();
 
 /* TODAY'S DATE */
@@ -59,10 +62,11 @@ function renderUser(userInput) {
       journalEntries.dataset.id = data.id;
       getJournals(data.id);
       hiddenId.dataset.id = data.id 
+      journalEntries.style.display = "initial";
+      createEntryBtn.style.display = "initial";
     })
     // console.log(newCurrentUserId);
-      }
-});
+  };
 
 function processUser(user) {
   journalEntries.dataset.id = user.id;
