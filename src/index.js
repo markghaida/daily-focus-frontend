@@ -12,12 +12,17 @@ const entryInput = document.querySelector("#w3review")
 const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
 const emotionButton = document.querySelector('#emotion');
+const deleteJournalBtn = document.querySelector('#delete-btn');
+const navBar = document.querySelector('.nav-bar');
 
+let lastClickedElement;
 let currentDay;
 submitBtn.disabled = true;
 
 journalEntries.style.display = "none";
 createEntryBtn.style.display = "none";
+navBar.style.display = "none";
+
 
 fetchAffirmation()
 
@@ -60,20 +65,18 @@ function renderUser(userInput) {
     body: JSON.stringify(userInput),
   })
     .then(response => response.json())
-    .then(data => {
-      // newCurrentUserId.push(data.id);
-      journalEntries.dataset.id = data.id;
-      getJournals(data.id);
-      hiddenId.dataset.id = data.id
-      journalEntries.style.display = "initial";
-      createEntryBtn.style.display = "initial";
-    })
-  // console.log(newCurrentUserId);
+    .then(processUser)
 };
 
 function processUser(user) {
+  getJournals(user.id);
   journalEntries.dataset.id = user.id;
   loginForm.style.display = "none";
+  journalEntries.dataset.id = user.id;
+  hiddenId.dataset.id = user.id
+  journalEntries.style.display = "initial";
+  createEntryBtn.style.display = "initial";
+  navBar.style.display = "initial";
   deleteUser(user.id);
 }
 
@@ -128,7 +131,8 @@ function renderJournals(journalData) {
 
 function selectedEntry(e) {
   e.preventDefault();
-  console.log(e.target.parentNode.children);
+  lastClickedElement = e.target.parentNode;
+  // console.log(e.target.parentNode.children);
   const date = e.target.parentNode.children[0].textContent
   const entry = e.target.parentNode.children[1].alt
   const affirmation = e.target.parentNode.children[2].alt
@@ -206,7 +210,11 @@ function displayAffirmation(affirmation) {
 
 /* EVENT LISTENER ON SUBMIT ENTRY FORM */
 
+let emojiValue;
+
 emotionButton.addEventListener('click', event => {
+  emojiValue = event.target.id;
+});
 
   entryForm.addEventListener("submit", function (e) {
     e.preventDefault()
@@ -215,7 +223,7 @@ emotionButton.addEventListener('click', event => {
       user_id: hiddenId.dataset.id,
       affirmation: affirmationDiv.textContent,
       journal_entry: entryInput.value,
-      feeling: event.target.id
+      feeling: emojiValue
     }
 
     fetch('http://localhost:3000/journals', {
@@ -230,8 +238,8 @@ emotionButton.addEventListener('click', event => {
         journalEntries.innerHTML = "";
         getJournals(data.user_id);
       })
-  })
-});
+  });
+
 
 /* CREATE A NEW JOURNAL ENTRY*/
 
@@ -241,3 +249,22 @@ createEntryBtn.addEventListener("click", function (e) {
   entryInput.value = "Create a Journal Entry";
   fetchAffirmation();
 })
+
+/* DELETE JOURNAL ENTRY */
+
+deleteJournalBtn.addEventListener('click', event => {
+  console.log('success');
+  console.log(lastClickedElement.id)
+  deleteJournalEntry(lastClickedElement.id);
+  lastClickedElement.remove();
+})
+
+function deleteJournalEntry(id){
+  fetch(`http://localhost:3000/journals/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  console.log('success');
+}
