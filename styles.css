@@ -49,3 +49,9 @@ input[type="submit"]{
     margin-top: -70px;
     margin-bottom: 70px;
 }
+
+#create-entry{
+    width: 8em;  
+    height: 3em;
+    margin-left: 120px;
+}

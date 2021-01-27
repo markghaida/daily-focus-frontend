@@ -6,12 +6,13 @@ const createBtn = document.querySelector('#create-btn');
 const affirmationDiv = document.querySelector('.div5');
 const dateBox = document.querySelector('.div10');
 const topNav = document.querySelector('.div11');
-const submitBtn = document.querySelector("input")
+const submitBtn = document.querySelector("#submit-entry-button")
 const hiddenId = document.querySelector("#user-id-hidden")
 const entryInput = document.querySelector("#w3review")
 const entryForm = document.querySelector("form")
+const createEntryBtn = document.querySelector("#create-entry")
 let currentDay;
-
+submitBtn.disabled = true;
 
 dayOfTheWeek();
 /* TODAY'S DATE */
@@ -232,3 +233,10 @@ entryForm.addEventListener("submit", function(e){
 
 
 /* CREATE A NEW JOURNAL ENTRY*/
+
+createEntryBtn.addEventListener("click",function(e){
+  e.preventDefault();  
+  submitBtn.disabled = false;
+  entryInput.value = "Create a Journal Entry";
+  fetchAffirmation();
+})
