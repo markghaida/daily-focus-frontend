@@ -1,5 +1,5 @@
-body {
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(25, 130, 216));
+body { 
+    background-size: cover;
 }
 
 .parent {
