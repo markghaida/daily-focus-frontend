@@ -15,6 +15,24 @@ body {
 /* div {
     border: 1px solid black;
 } */
+
+#emotion {
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    font-size:18px;
+    vertical-align: middle;
+}
+  
+input[type="radio"] {
+    vertical-align: middle;
+}
+
+.div5 {
+    text-align: center;
+}
     
 .div1 { grid-area: 9 / 11 / 12 / 12; }
 .div2 { grid-area: 9 / 6 / 13 / 10; }
