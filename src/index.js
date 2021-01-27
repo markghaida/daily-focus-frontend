@@ -11,12 +11,15 @@ const hiddenId = document.querySelector("#user-id-hidden")
 const entryInput = document.querySelector("#w3review")
 const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
+const emotionButton = document.querySelector('#emotion');
 
 let currentDay;
 submitBtn.disabled = true;
 
 journalEntries.style.display = "none";
 createEntryBtn.style.display = "none";
+
+fetchAffirmation()
 
 dayOfTheWeek();
 
@@ -61,12 +64,12 @@ function renderUser(userInput) {
       // newCurrentUserId.push(data.id);
       journalEntries.dataset.id = data.id;
       getJournals(data.id);
-      hiddenId.dataset.id = data.id 
+      hiddenId.dataset.id = data.id
       journalEntries.style.display = "initial";
       createEntryBtn.style.display = "initial";
     })
-    // console.log(newCurrentUserId);
-  };
+  // console.log(newCurrentUserId);
+};
 
 function processUser(user) {
   journalEntries.dataset.id = user.id;
@@ -74,14 +77,14 @@ function processUser(user) {
   deleteUser(user.id);
 }
 
-function getJournals(id){
+function getJournals(id) {
   fetch(`http://localhost:3000/users/${id}`)
-  .then(response => response.json())
-  .then(data => 
-    renderJournals(data));
-  };
+    .then(response => response.json())
+    .then(data =>
+      renderJournals(data));
+};
 
-function renderJournals(journalData){
+function renderJournals(journalData) {
   const allJournals = journalData.journals
   const ul = document.createElement("div")
 
@@ -94,13 +97,13 @@ function renderJournals(journalData){
     const affirmationLi = document.createElement("li");
     const feelingLi = document.createElement("li");
     const br = document.createElement("br")
-    const entryPreview = journalEntry.journal_entry.substr(0,25) + "..."
-    const affirmationPreview = journalEntry.affirmation.substr(0,25) + "..."
+    const entryPreview = journalEntry.journal_entry.substr(0, 25) + "..."
+    const affirmationPreview = journalEntry.affirmation.substr(0, 25) + "..."
 
     //APPENDING ITEMS TO CORRESPONDING LI
     dateLi.textContent = `Date: ${journalEntry.created_at}`
     dateLi.id = "date-li"
-    entryLi.textContent =  `Journal Entry: ${entryPreview}`
+    entryLi.textContent = `Journal Entry: ${entryPreview}`
     entryLi.id = "entry-li"
     entryLi.alt = journalEntry.journal_entry
     affirmationLi.textContent = `Affirmation: ${affirmationPreview}`
@@ -112,7 +115,7 @@ function renderJournals(journalData){
     //FINAL APPENDING 
     innerUl.id = journalEntry.id;
     innerUl.append(dateLi, entryLi, affirmationLi, feelingLi);
-    ul.append(innerUl);
+    ul.prepend(innerUl);
     ul.append(br);
     journalEntries.append(ul);
 
@@ -123,32 +126,32 @@ function renderJournals(journalData){
 
 /* EVENT LISTENER ON EACH JOURNAL ENTRY */
 
-function selectedEntry(e){
+function selectedEntry(e) {
   e.preventDefault();
   console.log(e.target.parentNode.children);
   const date = e.target.parentNode.children[0].textContent
   const entry = e.target.parentNode.children[1].alt
   const affirmation = e.target.parentNode.children[2].alt
   const feeling = e.target.parentNode.children[3].textContent
-  
-  entryInput.readOnly = true; 
-  entryInput.value = entry;
-  
-  const editBtn = document.querySelector("#edit-btn")
-  
-  editBtn.addEventListener("click", function(e){  
-    
-//why is it that I can edit the first entry I click on, but not any after?
 
-    if(entryInput.readOnly === !false){
+  entryInput.readOnly = true;
+  entryInput.value = entry;
+
+  const editBtn = document.querySelector("#edit-btn")
+
+  editBtn.addEventListener("click", function (e) {
+
+    //why is it that I can edit the first entry I click on, but not any after?
+
+    if (entryInput.readOnly === !false) {
       console.log(e)
-      entryInput.readOnly = false; 
+      entryInput.readOnly = false;
       editBtn.textContent = "Disable Edit"
       submitBtn.value = "Update"
-      
-    }else{
-      
-      entryInput.readOnly = true; 
+
+    } else {
+
+      entryInput.readOnly = true;
       editBtn.textContent = "Edit Entry"
       submitBtn.value = "Submit"
     }
@@ -156,10 +159,6 @@ function selectedEntry(e){
 
   affirmationDiv.textContent = affirmation;
 };
-
-function populateJournalArea() {
-};
-
 
 /* DELETE USER ACCOUNT */
 
@@ -199,7 +198,6 @@ function fetchAffirmation() {
     .then(data => displayAffirmation(data[0].phrase));
 }
 
-fetchAffirmation()
 
 function displayAffirmation(affirmation) {
   affirmationDiv.textContent = affirmation;
@@ -207,39 +205,38 @@ function displayAffirmation(affirmation) {
 
 
 /* EVENT LISTENER ON SUBMIT ENTRY FORM */
-entryForm.addEventListener("submit", function(e){
-  e.preventDefault()
-  
-  newJournalObj = {
-    user_id: hiddenId.dataset.id,
-    affirmation: affirmationDiv.textContent,
-    journal_entry: entryInput.value,
-    feeling: "happy"
-  }
-  
-  fetch('http://localhost:3000/journals',{
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(newJournalObj),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data.user_id);
-    journalEntries.innerHTML = "";
-    getJournals(data.user_id);
-  })
-  
-  })
 
-/*RE-RENDER TO UPDATE JOURNAL FEED */
+emotionButton.addEventListener('click', event => {
 
+  entryForm.addEventListener("submit", function (e) {
+    e.preventDefault()
+
+    newJournalObj = {
+      user_id: hiddenId.dataset.id,
+      affirmation: affirmationDiv.textContent,
+      journal_entry: entryInput.value,
+      feeling: event.target.id
+    }
+
+    fetch('http://localhost:3000/journals', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newJournalObj),
+    })
+      .then(response => response.json())
+      .then(data => {
+        journalEntries.innerHTML = "";
+        getJournals(data.user_id);
+      })
+  })
+});
 
 /* CREATE A NEW JOURNAL ENTRY*/
 
-createEntryBtn.addEventListener("click",function(e){
-  e.preventDefault();  
+createEntryBtn.addEventListener("click", function (e) {
+  e.preventDefault();
   submitBtn.disabled = false;
   entryInput.value = "Create a Journal Entry";
   fetchAffirmation();
