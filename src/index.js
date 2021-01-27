@@ -6,7 +6,13 @@ const createBtn = document.querySelector('#create-btn');
 const affirmationDiv = document.querySelector('.div5');
 const dateBox = document.querySelector('.div10');
 const topNav = document.querySelector('.div11');
+const submitBtn = document.querySelector("#submit-entry-button")
+const hiddenId = document.querySelector("#user-id-hidden")
+const entryInput = document.querySelector("#w3review")
+const entryForm = document.querySelector("form")
+const createEntryBtn = document.querySelector("#create-entry")
 let currentDay;
+submitBtn.disabled = true;
 
 dayOfTheWeek();
 /* TODAY'S DATE */
@@ -52,6 +58,8 @@ loginForm.addEventListener('submit', event => {
     .then(data => {
       // newCurrentUserId.push(data.id);
       journalEntries.dataset.id = data.id;
+      getJournals(data.id);
+      hiddenId.dataset.id = data.id 
     })
     // console.log(newCurrentUserId);
       }
@@ -62,38 +70,90 @@ loginForm.addEventListener('submit', event => {
 function getJournals(id){
   fetch(`http://localhost:3000/users/${id}`)
   .then(response => response.json())
-  .then(data => console.log(data.journals[0].affirmation));
+  .then(data => {
+    // console.log(data.journals[0].affirmation)
+    renderJournals(data)});
+    // console.log(data)});
+  };
+
+function renderJournals(journalData){
+  const allJournals = journalData.journals
+  const ul = document.createElement("div")
+  allJournals.forEach(journalEntry => {
+
+    // CREATING LI & OTHER TAGS 
+    const innerUl = document.createElement("ul")
+    const dateLi = document.createElement("li");
+    const entryLi = document.createElement("li");
+    const affirmationLi = document.createElement("li");
+    const feelingLi = document.createElement("li");
+    const br = document.createElement("br")
+    const entryPreview = journalEntry.journal_entry.substr(0,25) + "..."
+    const affirmationPreview = journalEntry.affirmation.substr(0,25) + "..."
+
+    //APPENDING ITEMS TO CORRESPONDING LI
+    dateLi.textContent = `Date: ${journalEntry.created_at}`
+    dateLi.id = "date-li"
+    entryLi.textContent =  `Journal Entry: ${entryPreview}`
+    entryLi.id = "entry-li"
+    entryLi.alt = journalEntry.journal_entry
+    affirmationLi.textContent = `Affirmation: ${affirmationPreview}`
+    affirmationLi.id = "affirmation-li"
+    affirmationLi.alt = journalEntry.affirmation
+    feelingLi.textContent = `Feeling: ${journalEntry.feeling}`
+    feelingLi.id = "feeling-li"
+
+    //FINAL APPENDING 
+    innerUl.id = journalEntry.id;
+    innerUl.append(dateLi, entryLi, affirmationLi, feelingLi);
+    ul.append(innerUl);
+    ul.append(br);
+    journalEntries.append(ul);
+
+    // ADDING EVENT LISTENER TO EACH INNER UL
+    innerUl.addEventListener("click", selectedEntry)
+  })
 };
 
-function renderJournals(journals){
-  console.log(journals)
-  const ul = document.createElement("ul")
-  journals.forEach(journalEntry => {
-    const li = document.createElement("li")
-    const journalObj = {
-      date: journalEntry.created_at,
-      entry: journalEntry.journal_entry,
-      affirmation: journalEntry.affirmation,
-      feeling: journalEntry.feeling
-    }
-    // console.log(journalObj["Date"])
-    li.append(journalObj.entry)  
-    li.id = journalEntry.id
-    ul.append(li)
-    journalEntries.append(ul);
-    li.addEventListener("click", clickedEntry)
-  })
-  
-};
 
 /* EVENT LISTENER ON EACH JOURNAL ENTRY */
 
-function clickedEntry(e){
+function selectedEntry(e){
   e.preventDefault();
+  console.log(e.target.parentNode.children);
+  const date = e.target.parentNode.children[0].textContent
+  const entry = e.target.parentNode.children[1].alt
+  const affirmation = e.target.parentNode.children[2].alt
+  const feeling = e.target.parentNode.children[3].textContent
+  
+  entryInput.readOnly = true; 
+  entryInput.value = entry;
+  
+  const editBtn = document.querySelector("#edit-btn")
+  
+  editBtn.addEventListener("click", function(e){  
+    
+//why is it that I can edit the first entry I click on, but not any after?
+    if(entryInput.readOnly === !false){
+      console.log(e)
+      entryInput.readOnly = false; 
+      editBtn.textContent = "Disable Edit"
+      submitBtn.value = "Update"
+      
+    }else{
+      
+      entryInput.readOnly = true; 
+      editBtn.textContent = "Edit Entry"
+      submitBtn.value = "Submit"
+    }
+  })
+
+  affirmationDiv.textContent = affirmation;
 };
 
 function populateJournalArea(){
 };
+
 
 
 /* DELETE USER ACCOUNT */
@@ -128,6 +188,8 @@ function deleteUserFetch(id) {
   })
   console.log('success');
 };
+
+
 /* DISPLAY AFFIRMATION */
 
 function fetchAffirmation() {
@@ -141,3 +203,40 @@ fetchAffirmation()
 function displayAffirmation(affirmation) {
   affirmationDiv.textContent = affirmation;
 };
+
+
+/* EVENT LISTENER ON SUBMIT ENTRY FORM */
+entryForm.addEventListener("submit", function(e){
+  e.preventDefault()
+  
+  newJournalObj = {
+    user_id: hiddenId.dataset.id,
+    affirmation: affirmationDiv.textContent,
+    journal_entry: entryInput.value,
+    feeling: "happy"
+  }
+  
+  fetch('http://localhost:3000/journals',{
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(newJournalObj),
+  })
+  .then(response => response.json())
+  .then(data => {
+  console.log('Success:', data);
+  })
+  
+  })
+
+
+
+/* CREATE A NEW JOURNAL ENTRY*/
+
+createEntryBtn.addEventListener("click",function(e){
+  e.preventDefault();  
+  submitBtn.disabled = false;
+  entryInput.value = "Create a Journal Entry";
+  fetchAffirmation();
+})
