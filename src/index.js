@@ -90,6 +90,7 @@ function getJournals(id) {
   function renderJournals(journalData) {
     journalForm.style.display = "initial";
     const allJournals = journalData.journals
+    // console.log(allJournals)
     
     
       const div = document.createElement("div")
