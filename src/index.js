@@ -82,66 +82,92 @@ function processUser(user) {
 
 function getJournals(id) {
   fetch(`http://localhost:3000/users/${id}`)
-    .then(response => response.json())
-    .then(data =>
-      renderJournals(data));
-};
+  .then(response => response.json())
+  .then(data =>
+    renderJournals(data));
+  };
+  
+  function renderJournals(journalData) {
+    journalForm.style.display = "initial";
+    const allJournals = journalData.journals
+    
+    
+      const div = document.createElement("div")
+      div.id = "div6-inner-div"
+      const headerDiv = document.createElement("div")
+      headerDiv.id = "header-div6"
+    
+      const stickyHeader = document.createElement("ul")
+      stickyHeader.textContent = "Past Journal Entries"
+      stickyHeader.id = "sticky"
+      
+      allJournals.forEach(journalEntry => {
+        
+        // CREATING LI & OTHER TAGS 
+        const innerUl = document.createElement("ul")
+        const dateLi = document.createElement("li");
+        const entryLi = document.createElement("li");
+        const affirmationLi = document.createElement("li");
+        const feelingLi = document.createElement("li");
+        const br = document.createElement("br")
+        const entryPreview = journalEntry.journal_entry.substr(0, 20) + "..."
+        // const affirmationPreview = journalEntry.affirmation.substr(0, 25) + "..."
+        console.log(journalEntry.created_at)
+        const currentDate = new Date(`${journalEntry.created_at}`)
+        const currentDayOfMonth = currentDate.getDate();
+        const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
+        const currentYear = currentDate.getFullYear();
+        const dateString = ("0" + (currentMonth + 1)) + "-" + currentDayOfMonth + "-" + currentYear;
+        
+        const img = document.createElement("img")
+        const hr = document.createElement("hr")
+        console.log(dateString)
+        //APPENDING ITEMS TO CORRESPONDING LI
+        
+        img.src = 'https://cdn.iconscout.com/icon/free/png-256/diary-1835758-1556317.png'
+        img.id = "journal-image"
+        dateLi.textContent = `Date: ${dateString}`
+        dateLi.id = "date-li"
+        // entryLi.textContent = `Entry: ${entryPreview}`
+        entryLi.id = "entry-li"
+        entryLi.alt = journalEntry.journal_entry
+        // affirmationLi.textContent = `Affirmation: ${affirmationPreview}`
+        // affirmationLi.id = "affirmation-li"
+        // affirmationLi.alt = journalEntry.affirmation
+        // affirmationLi.style.visibility = "hidden";
+        feelingLi.textContent = `Feeling: ${journalEntry.feeling}`
+        feelingLi.id = "feeling-li"
+        
+        //FINAL APPENDING 
+        innerUl.alt = journalEntry.affirmation
+        innerUl.id = journalEntry.id;
+        innerUl.append(img, dateLi, entryLi, feelingLi, hr);
+        div.prepend(innerUl);
+        div.prepend(br);
+        journalEntries.append(div);
+        
+        // ADDING EVENT LISTENER TO EACH INNER UL
+        
+        innerUl.addEventListener("click", selectedEntry)
+      })
+      
+      // headerDiv.prepend(stickyHeader)
+      div.prepend(stickyHeader)
+    };
+    
+    /* EVENT LISTENER ON EACH JOURNAL ENTRY */
+    
+    function selectedEntry(e) {
+      e.preventDefault();
+      lastClickedElement = e.target.parentNode;
+      console.log(lastClickedElement);
+      const date = e.target.parentNode.children[1].textContent
+      const entry = e.target.parentNode.children[2].alt
+      const affirmation = e.target.parentNode.alt
+      const feeling = e.target.parentNode.children[3].textContent
 
-function renderJournals(journalData) {
-  journalForm.style.display = "initial";
-  const allJournals = journalData.journals
-  const ul = document.createElement("div")
-
-  allJournals.forEach(journalEntry => {
-
-    // CREATING LI & OTHER TAGS 
-    const innerUl = document.createElement("ul")
-    const dateLi = document.createElement("li");
-    const entryLi = document.createElement("li");
-    const affirmationLi = document.createElement("li");
-    const feelingLi = document.createElement("li");
-    const br = document.createElement("br")
-    const entryPreview = journalEntry.journal_entry.substr(0, 25) + "..."
-    const affirmationPreview = journalEntry.affirmation.substr(0, 25) + "..."
-
-    //APPENDING ITEMS TO CORRESPONDING LI
-    dateLi.textContent = `Date: ${journalEntry.created_at}`
-    dateLi.id = "date-li"
-    entryLi.textContent = `Journal Entry: ${entryPreview}`
-    entryLi.id = "entry-li"
-    entryLi.alt = journalEntry.journal_entry
-    affirmationLi.textContent = `Affirmation: ${affirmationPreview}`
-    affirmationLi.id = "affirmation-li"
-    affirmationLi.alt = journalEntry.affirmation
-    feelingLi.textContent = `Feeling: ${journalEntry.feeling}`
-    feelingLi.id = "feeling-li"
-
-    //FINAL APPENDING 
-    innerUl.id = journalEntry.id;
-    innerUl.append(dateLi, entryLi, affirmationLi, feelingLi);
-    ul.prepend(innerUl);
-    ul.append(br);
-    journalEntries.append(ul);
-
-    // ADDING EVENT LISTENER TO EACH INNER UL
-
-    innerUl.addEventListener("click", selectedEntry)
-  })
-};
-
-/* EVENT LISTENER ON EACH JOURNAL ENTRY */
-
-function selectedEntry(e) {
-  e.preventDefault();
-  lastClickedElement = e.target.parentNode;
-  console.log(lastClickedElement);
-  const date = e.target.parentNode.children[0].textContent
-  const entry = e.target.parentNode.children[1].alt
-  const affirmation = e.target.parentNode.children[2].alt
-  const feeling = e.target.parentNode.children[3].textContent
-
-  entryInput.readOnly = true;
-  entryInput.value = entry;
+      entryInput.readOnly = true;
+      entryInput.value = entry;
 
   // const editBtn = document.querySelector("#edit-btn")
 
