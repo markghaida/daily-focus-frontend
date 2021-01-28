@@ -6,7 +6,7 @@ body {
     background-attachment: fixed;
 
     font-family: Verdana, Helvetica, sans-serif;
-    /* margin: 0; height: 100%;  */
+    margin: 0; height: 100%; 
     /* overflow: hidden */
 }
 
@@ -40,6 +40,9 @@ input[type="radio"] {
 
 .div5 {
     text-align: center;
+    margin-top: -50px;
+    margin-bottom: 10px;
+    margin-left: 160px;
 }
     
 .div1 { grid-area: 9 / 11 / 12 / 12; }
@@ -56,9 +59,11 @@ input[type="radio"] {
 
 
 .div5{
-    margin-top: -50px;
-    margin-bottom: 80px;
-    margin-left: -60px;
+    
+
+    margin-top: -90px;
+    margin-bottom: 50px;
+    margin-left: 160px;
 }
 
 .div6{
@@ -76,8 +81,10 @@ input[type="submit"]{
     height: 3em;
 }
 #emotion{
-    margin-top: -70px;
-    margin-bottom: 70px;
+
+
+    margin-bottom: 66px;
+    margin-left: 160px;
 }
 
 #create-entry{
@@ -99,15 +106,14 @@ input[type="submit"]{
 }
 
 #delete-btn, #share-btn{
-    width: 8em;  
+    width: 8em;
     height: 4em;
-    margin-left: 120px;
     margin-bottom: 20px;
-
     font-family: Verdana, Helvetica, sans-serif;
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
     font-size: small;
+    margin-left: -40px;
 
 }
 
@@ -133,6 +139,7 @@ textarea#w3review {
     background-position: bottom right;
     background-repeat: no-repeat;
     margin-top: 25px;
+    margin-left: 100px;
 }
 
 li{
@@ -165,15 +172,15 @@ ul{
 #sticky{
     position: fixed;
     top: 144px;
-    width: 23%;
+    width: 23.5%;
     padding: 9px 11px;
     background: #555;
     color: white;
     text-align: center;
     font-family: Verdana, Helvetica, sans-serif;
-    border-radius: 5px;
-  
-
+    border-radius: 3px;
+    margin-top: 72px;
+    margin-left: -4px;
 }
 
 .div10 {
@@ -192,11 +199,13 @@ ul{
     margin-left: 330px;
     margin-right: auto;
     width: 30%;
+
+ 
 }
 
 .div1 {
     
-    margin-top: 25px;
+    margin-top: 45px;
 }
 
 .div11 {
@@ -205,6 +214,14 @@ ul{
 
 #emotion {
     /* margin-left: -60px; */
-    margin-right: 60px;
+    /* margin-right: 0px; */
+    margin-left: 160px;
+    
 }
+
+.div8{
+    border-bottom: 3px solid;
+    border-color: #9e9e9e;
+    margin-bottom: 40px;
+    border-radius: 10px;
 }
