@@ -1,6 +1,12 @@
 body { 
-    background-size: cover;
-    margin: 0; height: 100%; 
+
+    background: url('src/images/design.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+
+    font-family: Verdana, Helvetica, sans-serif;
+    /* margin: 0; height: 100%;  */
     /* overflow: hidden */
 }
 
@@ -48,9 +54,11 @@ input[type="radio"] {
 .div10 { grid-area: 2 / 10 / 3 / 13; }
 .div11 { grid-area: 1 / 10 / 2 / 13; }
 
+
 .div5{
-    margin-top: -80px;
-    margin-bottom: 100px;
+    margin-top: -50px;
+    margin-bottom: 80px;
+    margin-left: -60px;
 }
 
 .div6{
@@ -90,9 +98,41 @@ input[type="submit"]{
 
 }
 
-#w3review{
-    margin-top: -30px;
-    margin-left: 15px;
+#delete-btn, #share-btn{
+    width: 8em;  
+    height: 4em;
+    margin-left: 120px;
+    margin-bottom: 20px;
+
+    font-family: Verdana, Helvetica, sans-serif;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    font-size: small;
+
+}
+
+button.delete-user-btn {
+    width: 12em;  
+    height: 4em;
+    margin-left: 120px;
+    margin-bottom: 20px;
+
+    font-family: Verdana, Helvetica, sans-serif;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    font-size: medium; 
+}
+
+textarea#w3review {
+    width: 400px;
+    height: 120px;
+    border: 3px solid #1f1e1e;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+    background-image: url(bg.gif);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    margin-top: 25px;
 }
 
 li{
@@ -136,6 +176,35 @@ ul{
 
 }
 
-#header-div6{
+.div10 {
+    width: 16em;
+    height: 4em;
+    margin-left: -100px;
+    margin-bottom: 50px;
+    font-family: Verdana, Helvetica, sans-serif;
+    background-color: rgb(250 245 233);
+    border-radius: 5px;
+    font-size: medium;
+}
+
+.div8 > img {
+    display: block;
+    margin-left: 330px;
+    margin-right: auto;
+    width: 30%;
+}
+
+.div1 {
     
+    margin-top: 25px;
+}
+
+.div11 {
+    margin-left: -200px;
+}
+
+#emotion {
+    /* margin-left: -60px; */
+    margin-right: 60px;
+}
 }
