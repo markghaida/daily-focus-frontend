@@ -11,7 +11,9 @@ const hiddenId = document.querySelector("#user-id-hidden")
 const entryInput = document.querySelector("#w3review")
 const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
-const emotionButton = document.querySelector('#emotion');
+
+const emotionButton = document.querySelector('fieldset');
+
 const deleteJournalBtn = document.querySelector('#delete-btn');
 const navBar = document.querySelector('.nav-bar');
 const journalForm = document.querySelector('#journalForm');
@@ -243,6 +245,7 @@ let emojiValue;
 
 emotionButton.addEventListener('click', event => {
   emojiValue = event.target.id;
+  console.log(emojiValue)
 });
 
   entryForm.addEventListener("submit", function (e) {

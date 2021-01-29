@@ -63,7 +63,7 @@ input[type="radio"] {
 
     margin-top: -120px;
     margin-bottom: 50px;
-    margin-left: 160px;
+    margin-left: 130px;
     position: absolute;
 }
 
@@ -139,7 +139,7 @@ textarea#w3review {
     /* background-image: url(bg.gif); */
     background-position: bottom right;
     background-repeat: no-repeat;
-    margin-top: -22px;
+    margin-top: -60px;
     margin-left: 100px;
 }
 
@@ -239,4 +239,42 @@ ul{
 fieldset{
     /* position: absolute; */
     display: flex;
+    border-radius: 100px;
 }
+
+
+.blobs {
+    margin-top: 50px;
+    clear: both;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: rgb(153, 153, 153); */
+    border-radius: 85px;
+  }
+  .blobs li {
+    /* padding: -9px 0; */
+    text-align: center;
+    /* background: #aaa; */
+    user-select: none;
+    width: 50px;
+    /* height: 50px; */
+    border-radius: 75px;
+    box-sizing: border-box;
+    margin: 10px;
+    animation: enter 0.25s ease-out;
+    transition: background .5s;
+    font-size: xxx-large;
+}
+.blobs li:hover {
+    background: rgb(179, 177, 180);
+    transition: background .5s, opacity .5s;
+}
+.blobs li:active {
+    transform: translateY(5px);
+    transition: background 10s;
+    background: rgb(255, 2, 2);
+  }
+ 
