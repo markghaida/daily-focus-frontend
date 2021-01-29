@@ -107,7 +107,7 @@ input[type="submit"]{
 
 }
 
-#delete-btn, #share-btn{
+#delete-btn, #edit-btn{
     width: 8em;
     height: 4em;
     margin-bottom: 20px;

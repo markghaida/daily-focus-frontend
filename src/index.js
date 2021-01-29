@@ -11,7 +11,7 @@ const hiddenId = document.querySelector("#user-id-hidden")
 const entryInput = document.querySelector("#w3review")
 const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
-const shareButton = document.querySelector("#share-btn")
+const editButton = document.querySelector("#edit-btn")
 const emotionButton = document.querySelector('fieldset');
 
 const twitterButton = document.querySelector('#twitter-button')
@@ -328,6 +328,12 @@ function deleteJournalEntry(id){
   })
   console.log('success');
 }
+
+/* EDIT JOURNAL ENTRY */ 
+
+editButton.addEventListener('click', event => {
+  console.log(event.target);
+})
 
 /* SHARE BUTTONS */
 function shareToTwitter(date, entry, affirmation, feeling){
