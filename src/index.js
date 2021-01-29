@@ -11,9 +11,9 @@ const hiddenId = document.querySelector("#user-id-hidden")
 const entryInput = document.querySelector("#w3review")
 const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
-
+const shareButton = document.querySelector("#share-btn")
 const emotionButton = document.querySelector('fieldset');
-const shareButton = document.querySelector('#share-btn')
+const twitterButton = document.querySelector('#twitter-button')
 const deleteJournalBtn = document.querySelector('#delete-btn');
 const navBar = document.querySelector('.nav-bar');
 const journalForm = document.querySelector('#journalForm');
@@ -320,13 +320,12 @@ function deleteJournalEntry(id){
 
 /* SHARE BUTTON */
 function shareEntry(date, entry, affirmation, feeling){
-shareButton.addEventListener('click', function(e){
-
-
-
-  var url = "https://cold-squid-64.loca.lt";
-  var text = `Affirmation of The Day:\n"${affirmation}"\n\nJournal Entry: ${entry}\n\nMy Mood: ${feeling}\n\n`;
-  window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+  
+    twitterButton.addEventListener('click', function(e){
+    console.log(e)
+    var url = "https://thepresentmoment.com/journal-otd";
+    var text = `Affirmation of The Day:\n"${affirmation}"\n\nJournal Entry: ${entry}\n\nMy Mood: ${feeling}\n\n`;
+    window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
   
 })
 }
