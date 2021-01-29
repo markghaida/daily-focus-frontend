@@ -355,12 +355,13 @@ function shareToFacebook(date, entry, affirmation, feeling){
 
 function shareToPinterest(date, entry, affirmation, feeling){
   
-    twitterButton.addEventListener('click', function(e){
+    pinterestButton.addEventListener('click', function(e){
     console.log(e)
     
     var url = "https://thepresentmoment.com/journal-otd";
     var text = `Affirmation of The Day:\n"${affirmation}"\n\nJournal Entry: ${entry}\n\nMy Mood: ${feeling}\n\n`;
-    window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+    // https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fsharingbuttons.io&media=http%3A%2F%2Fsharingbuttons.io&description=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.
+    window.open('https://www.pinterest.com/pin/create/button/?url='+encodeURIComponent(url)+'&description='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
   
 })
 }
