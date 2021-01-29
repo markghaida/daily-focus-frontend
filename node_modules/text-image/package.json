@@ -1,0 +1,31 @@
+{
+  "name": "text-image",
+  "version": "0.7.0",
+  "description": "Convert text to image with javascript",
+  "main": "dist/text-image.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincent7128/text-image.git"
+  },
+  "keywords": [
+    "HTML",
+    "Text",
+    "Image"
+  ],
+  "author": "Vincent Chen <vincent@pinpin.link>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vincent7128/text-image/issues"
+  },
+  "homepage": "https://vincent7128.github.io/text-image/",
+  "devDependencies": {
+    "del": "^4.0.0",
+    "gulp": "^4.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-uglify": "^3.0.2",
+    "uglify-js": "^3.5.2"
+  }
+}

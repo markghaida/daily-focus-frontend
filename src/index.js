@@ -13,13 +13,14 @@ const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
 
 const emotionButton = document.querySelector('fieldset');
-
+const shareButton = document.querySelector('#share-btn')
 const deleteJournalBtn = document.querySelector('#delete-btn');
 const navBar = document.querySelector('.nav-bar');
 const journalForm = document.querySelector('#journalForm');
 
 let lastClickedElement;
 let currentDay;
+let lastClickedEmoji;
 submitBtn.disabled = true;
 
 journalEntries.style.display = "none";
@@ -167,8 +168,16 @@ function getJournals(id) {
       const date = e.target.parentNode.children[1].textContent
       const entry = e.target.parentNode.children[2].alt
       const affirmation = e.target.parentNode.alt
-      const feeling = e.target.parentNode.children[3].textContent
 
+      const feeling1 = e.target.parentNode.children[3].textContent
+      const feeling2 = feeling1.split(" ")
+      const feeling = feeling2[1]
+
+      
+      const selectedFeeling = document.querySelector(`#${feeling}`) 
+      shareEntry(date, entry, affirmation, selectedFeeling.textContent)
+      console.log(selectedFeeling)
+      selectedFeeling.style.background = "rgb(165, 219, 93)"
       entryInput.readOnly = true;
       entryInput.value = entry;
 
@@ -245,7 +254,13 @@ let emojiValue;
 
 emotionButton.addEventListener('click', event => {
   emojiValue = event.target.id;
-  console.log(emojiValue)
+  lastClickedEmoji = event.target;
+  if(lastClickedEmoji.style.background === "rgb(165, 219, 93)"){
+     event.target.style.background = "rgb(170, 170, 170)"
+  }else{
+    event.target.style.background = "rgb(165, 219, 93)"
+    // console.log("an emoji was picked")
+  }
 });
 
   entryForm.addEventListener("submit", function (e) {
@@ -280,6 +295,7 @@ createEntryBtn.addEventListener("click", function (e) {
   submitBtn.disabled = false;
   entryInput.value = "Create a Journal Entry";
   journalForm.style.display = "initial";
+
   fetchAffirmation();
 })
 
@@ -300,4 +316,17 @@ function deleteJournalEntry(id){
     }
   })
   console.log('success');
+}
+
+/* SHARE BUTTON */
+function shareEntry(date, entry, affirmation, feeling){
+shareButton.addEventListener('click', function(e){
+
+
+
+  var url = "https://cold-squid-64.loca.lt";
+  var text = `Affirmation of The Day:\n"${affirmation}"\n\nJournal Entry: ${entry}\n\nMy Mood: ${feeling}\n\n`;
+  window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+  
+})
 }
