@@ -31,7 +31,9 @@ journalEntries.style.display = "none";
 createEntryBtn.style.display = "none";
 navBar.style.display = "none";
 journalForm.style.display = "none";
-
+twitterButton.style.display = "none";
+facebookButton.style.display = "none";
+pinterestButton.style.display = "none";
 dayOfTheWeek();
 
 
@@ -84,6 +86,9 @@ function processUser(user) {
   journalEntries.style.display = "initial";
   createEntryBtn.style.display = "initial";
   navBar.style.display = "initial";
+  twitterButton.style.display = "initial";
+  facebookButton.style.display = "initial";
+  pinterestButton.style.display = "initial";
   deleteUser(user.id);
 }
 
