@@ -13,7 +13,11 @@ const entryForm = document.querySelector("form")
 const createEntryBtn = document.querySelector("#create-entry")
 const shareButton = document.querySelector("#share-btn")
 const emotionButton = document.querySelector('fieldset');
+
 const twitterButton = document.querySelector('#twitter-button')
+const facebookButton = document.querySelector("#facebook-button")
+const pinterestButton = document.querySelector("#pinterest-button")
+
 const deleteJournalBtn = document.querySelector('#delete-btn');
 const navBar = document.querySelector('.nav-bar');
 const journalForm = document.querySelector('#journalForm');
@@ -175,7 +179,14 @@ function getJournals(id) {
 
       
       const selectedFeeling = document.querySelector(`#${feeling}`) 
-      shareEntry(date, entry, affirmation, selectedFeeling.textContent)
+      
+      
+      shareToTwitter(date, entry, affirmation, selectedFeeling.textContent)
+      shareToFacebook(date, entry, affirmation, selectedFeeling.textContent)
+      shareToPinterest(date, entry, affirmation, selectedFeeling.textContent)
+      
+      
+      
       console.log(selectedFeeling)
       selectedFeeling.style.background = "rgb(165, 219, 93)"
       entryInput.readOnly = true;
@@ -318,11 +329,35 @@ function deleteJournalEntry(id){
   console.log('success');
 }
 
-/* SHARE BUTTON */
-function shareEntry(date, entry, affirmation, feeling){
+/* SHARE BUTTONS */
+function shareToTwitter(date, entry, affirmation, feeling){
   
     twitterButton.addEventListener('click', function(e){
     console.log(e)
+    var url = "https://thepresentmoment.com/journal-otd";
+    var text = `Affirmation of The Day:\n"${affirmation}"\n\nJournal Entry: ${entry}\n\nMy Mood: ${feeling}\n\n`;
+    window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+  
+})
+}
+
+function shareToFacebook(date, entry, affirmation, feeling){
+  
+    facebookButton.addEventListener('click', function(e){
+    console.log(e)
+    var app_id  = 232670735128259
+    var url = "https://thepresentmoment.com/journal-otd";
+    var text = `Affirmation of The Day:\n"${affirmation}"\n\nJournal Entry: ${entry}\n\nMy Mood: ${feeling}\n\n`;
+    window.open('https://facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+'&quote='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+  
+})
+}
+
+function shareToPinterest(date, entry, affirmation, feeling){
+  
+    twitterButton.addEventListener('click', function(e){
+    console.log(e)
+    
     var url = "https://thepresentmoment.com/journal-otd";
     var text = `Affirmation of The Day:\n"${affirmation}"\n\nJournal Entry: ${entry}\n\nMy Mood: ${feeling}\n\n`;
     window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
