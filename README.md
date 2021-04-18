@@ -1,3 +1,5 @@
+<img src="The Persent Moment GitHub ReadMe Cover.png" alt="The Present Moment" width="1200"/>
+
 Project: The Present Moment Journal
 Created by: Luis Torres and Mark Ghaida
 
